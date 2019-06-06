@@ -1,0 +1,38 @@
+#!/bin/bash
+if ! which prettier ; then
+  yarn global add prettier
+fi
+
+if [ ! -e ".prettierrc" ] ; then
+  read -p "Can't find .prettierrc, create this file? (y, n) " answer
+  case $answer in
+  y) {
+    echo {
+    echo "  \"printWidth\"": 80,
+    echo "  \"trailingComma\"": "\"all\"",
+    echo "  \"tabWidth\"": 2,
+    echo "  \"semi\"": true,
+    echo "  \"singleQuote\"": true,
+    echo "  \"bracketSpacing\"": true,
+    echo "  \"jsxBracketSameLine\"": false
+    echo }
+  } > .prettierrc;;
+  n) echo "Nice";;
+  esac  
+fi
+
+endpath=$(basename $(pwd))
+cd ..
+prettier --single-quote --trailing-comma es5 --write "{$endpath,__{tests,mocks}__}/**/*.js"
+
+echo "   -------------
+ /               \\
+|     The end     |
+ \\               /
+   -------------
+        \   ^__^
+         \  (@@)\_______
+            (__)\       )\/\\
+                ||----w |
+                ||     ||
+"
